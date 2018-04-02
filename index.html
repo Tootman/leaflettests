@@ -26,7 +26,8 @@
                     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright ">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution ">CARTO</a>',
                 }
             );
-    baseMap.addTo(mymap);
+    baseMaps={'BaseMap': baseMap};
+     baseMap.addTo(mymap);
     var marker1 = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
  var marker2 = L.marker([51.4, -0.19]).bindPopup("<b>Hello world2!</b><br>I am a popup2.").openPopup();
  var marker3 = L.marker([51.3, -0.29]).bindPopup("<b>Hello world3!</b><br>I am a popup2.").openPopup();
@@ -43,7 +44,7 @@ var overlayMaps = {
     GeoFeatures: geoLayer
 };
 
-L.control.layers(overlayMaps).addTo(mymap);
+L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
 // L.geoJSON(geoJSONFeatures).addTo(mymap);
 
