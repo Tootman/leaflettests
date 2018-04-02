@@ -36,18 +36,25 @@ new Vue({
             var marker2 = L.marker([51.45, -0.09]).addTo(this.map).bindPopup("<b>Hello world2!</b><br>I am a popup.").openPopup();
             var marker3 = L.marker([51.5, -0.15]).addTo(this.map).bindPopup("<b>Hello world!3</b><br>I am a popup.").openPopup();
             var myMarkers = L.layerGroup([marker1, marker2]);
-            var myMarkers2 = L.layerGroup([marker3]);
+            // var myMarkers2 = L.layerGroup([marker3]);
+
+            // not working!
+            L.geoJSON(this.geoJSONFeatures).addTo(this.map);
+
             var overlayMaps = {
                 Markers: myMarkers,
-                layer2: myMarkers2
+                Layer2: marker3,
+                //Layer3: geoLayer
             };
 
             L.control.layers(overlayMaps).addTo(this.map);
-            var geoLayer =   L.geoJSON(geoJSONFeatures);
+            
 
             // map event callback working - but popup.openOn /openPopup is undefined so not working
+            
+            /*
             popup = L.popup();
-            this.map.on("click", function(event) {
+             this.map.on("click", function(event) {
                 popup.setLatLng(event.latlng)
                 popup.setContent("You clicked the map at " + event.latlng.toString())
                 console.log("clicked!: " + event.latlng.toString());
@@ -55,6 +62,7 @@ new Vue({
                 //this.map.openPopup(popup);
                 // do some stuff…
             });
+            */
 
             // geoJSONFeatures = { "type": "FeatureCollection", "myprop": "hello", "myProp2": [{ "name": "Jimmy", "age": 25 }, { "name": "Freddy", "age": 26 }], "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.3, 51] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.35, 51.2] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [
             // [0.3, 51.1],    [0.3, 51.2],  [0.2, 51.4],   [0.1, 51.3]    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
