@@ -43,6 +43,7 @@ new Vue({
             };
 
             L.control.layers(overlayMaps).addTo(this.map);
+            var geoLayer =   L.geoJSON(geoJSONFeatures);
 
             // map event callback working - but popup.openOn /openPopup is undefined so not working
             popup = L.popup();
@@ -55,10 +56,10 @@ new Vue({
                 // do some stuff…
             });
 
-            geoJSONFeatures = { "type": "FeatureCollection", "myprop": "hello", "myProp2": [{ "name": "Jimmy", "age": 25 }, { "name": "Freddy", "age": 26 }], "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.3, 51] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.35, 51.2] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [
-            [0.3, 51.1],    [0.3, 51.2],  [0.2, 51.4],   [0.1, 51.3]    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
-             [ [0.3, 51],   [0.4, 51],  [0.4, 51.1],    [0.4, 51.1],     [0.3, 51]    ] ] }, "properties": { "prop0": "value0", "prop1": { "this": "that", "p2": "val2" } }, "myProp": "x" }] };
-            L.geoJSON(geoJSONFeatures).addTo(this.map);
+            // geoJSONFeatures = { "type": "FeatureCollection", "myprop": "hello", "myProp2": [{ "name": "Jimmy", "age": 25 }, { "name": "Freddy", "age": 26 }], "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.3, 51] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.35, 51.2] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [
+            // [0.3, 51.1],    [0.3, 51.2],  [0.2, 51.4],   [0.1, 51.3]    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
+            //  [ [0.3, 51],   [0.4, 51],  [0.4, 51.1],    [0.4, 51.1],     [0.3, 51]    ] ] }, "properties": { "prop0": "value0", "prop1": { "this": "that", "p2": "val2" } }, "myProp": "x" }] };
+            // L.geoJSON(geoJSONFeatures).addTo(this.map);
         }
 
 
