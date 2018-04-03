@@ -1,24 +1,15 @@
-new Vue({
+myApp = new Vue({
     el: '#app',
-    data: {
+    data: function() {return {
         map: null,
         tileLayer: null,
         popup: null,
+        testVar1:{name:"Barry", age:26},
         geojsonFeatures: { "type": "FeatureCollection", "myprop": "hello", "myProp2": [{ "name": "Jimmy", "age": 25 }, { "name": "Freddy", "age": 26 }], "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.3, 51] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.35, 51.2] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [
-                        [0.3, 51.1],
-                        [0.3, 51.2],
-                        [0.2, 51.4],
-                        [0.1, 51.3]
-                    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
-                        [
-                            [0.3, 51],
-                            [0.4, 51],
-                            [0.4, 51.1],
-                            [0.4, 51.1],
-                            [0.3, 51]
-                        ]
-                    ] }, "properties": { "prop0": "value0", "prop1": { "this": "that", "p2": "val2" } }, "myProp": "x" }] }
-    },
+             [0.3, 51.1],    [0.3, 51.2],  [0.2, 51.4],   [0.1, 51.3]    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
+              [ [0.3, 51],   [0.4, 51],  [0.4, 51.1],    [0.4, 51.1],     [0.3, 51]    ] ] }, "properties": { "prop0": "value0", "prop1": { "this": "that", "p2": "val2" } }, "myProp": "x" }] },
+        myVar: "Jimmy!"
+    }},
     mounted() { /* Code to run when app is mounted */
         this.initMap();
     },
@@ -38,13 +29,25 @@ new Vue({
             var myMarkers = L.layerGroup([marker1, marker2]);
             // var myMarkers2 = L.layerGroup([marker3]);
 
+            // this.geoJSONFeatures = { "type": "FeatureCollection", "myprop": "hello", "myProp2": [{ "name": "Jimmy", "age": 25 }, { "name": "Freddy", "age": 26 }], "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.3, 51] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.35, 51.2] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [
+            //  [0.3, 51.1],    [0.3, 51.2],  [0.2, 51.4],   [0.1, 51.3]    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
+             // [ [0.3, 51],   [0.4, 51],  [0.4, 51.1],    [0.4, 51.1],     [0.3, 51]    ] ] }, "properties": { "prop0": "value0", "prop1": { "this": "that", "p2": "val2" } }, "myProp": "x" }] };
+             //L.geoJSON(geoJSONFeatures).addTo(this.map);
+
+            var geoLayer = L.geoJSON(this.$data.geoJSONFeatures);
+            //geoLayer.addTo(this.map);
+            //geoLayer.addTo(this.map);
+            //console.log ("Var :" + this.myVar);
+            //console.log("var2: " + this.testVar1);
+            console.log("geo: " + geoLayer);
+
             // not working!
-            L.geoJSON(this.geoJSONFeatures).addTo(this.map);
+           // geol.addTo(this.map);
 
             var overlayMaps = {
                 Markers: myMarkers,
                 Layer2: marker3,
-                //Layer3: geoLayer
+                Layer3: geoLayer
             };
 
             L.control.layers(overlayMaps).addTo(this.map);
@@ -64,10 +67,8 @@ new Vue({
             });
             */
 
-            // geoJSONFeatures = { "type": "FeatureCollection", "myprop": "hello", "myProp2": [{ "name": "Jimmy", "age": 25 }, { "name": "Freddy", "age": 26 }], "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.3, 51] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [0.35, 51.2] }, "properties": { "prop0": "value0" } }, { "type": "Feature", "geometry": { "type": "LineString", "coordinates": [
-            // [0.3, 51.1],    [0.3, 51.2],  [0.2, 51.4],   [0.1, 51.3]    ] }, "properties": { "prop0": "value0", "prop1": 0, "prop2": [{ "subprop1": "val2", "sb2": "val2b" }, { "subprop2": "val2", "sb2": "val2b" }] } }, { "type": "Feature", "geometry": { "type": "Polygon", "coordinates": [
-            //  [ [0.3, 51],   [0.4, 51],  [0.4, 51.1],    [0.4, 51.1],     [0.3, 51]    ] ] }, "properties": { "prop0": "value0", "prop1": { "this": "that", "p2": "val2" } }, "myProp": "x" }] };
-            // L.geoJSON(geoJSONFeatures).addTo(this.map);
+            
+             
         }
 
 
