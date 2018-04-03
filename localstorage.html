@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="result"></div>
+    Field1 :
+    <input type="text" id="field1input">
+    <br> Field 2:
+    <input type="text" id="field2input">
+    <button id="import-geojson">Import GeoJSON </button>
+    <br>
+    <button id="saveChanges"> Update</button>
+</body>
+<script>
+// Check browser support
+
+var App = {};
+
+$(document).ready(function() {
+    if (typeof(Storage) !== "undefined") {
+        // Store
+        localStorage.setItem("lastname", "Smith");
+        // Retrieve
+        document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+    }
+
+    if (localStorage.getItem("geoJSON") != null) {
+    	console.log ("retrieving from local");
+        App.geoJSON = JSON.parse(localStorage.getItem("geoJSON"));
+        $("#field1input").val(App.geoJSON.myProp2[0].name);
+        $("#field2input").val(App.geoJSON.myProp2[0].age);
+    };
+
+    $("#import-geojson").click(function() {
+        App.importGeoJSON();
+    });
+
+    $("#export-geojson").click(function() {
+        console.log("hello from export!");
+        App.exportGeoJSON;
+    });
+    $("#saveChanges").click(function() {
+        console.log("hello from update");
+        App.updateGeoJSON();
+    });
+
+    App.importGeoJSON = function() {
+        console.log("hello from import func!");
+        $.getJSON("djs-test.geojson", function(data) {
+            App.geoJSON = data;
+            //$("#field1input").value = App.geoJSON.myProp2[0].name;
+            $("#field1input").val(App.geoJSON.myProp2[0].name);
+            $("#field2input").val(App.geoJSON.myProp2[0].age);
+        });
+    }
+
+    App.exportGeoJSON = function() {
+        console.log("hello from export function!");
+
+        // s this needed at all - data will persist via localstorage
+    }
+
+    App.updateGeoJSON = function() {
+        console.log("hello from update function!");
+        App.geoJSON.myProp2[0].name = $("#field1input").val();
+        App.geoJSON.myProp2[0].age = $("#field2input").val();
+        localStorage.setItem("geoJSON", JSON.stringify(App.geoJSON));
+    }
+
+});
+</script>
+</body>
+
+</html>
