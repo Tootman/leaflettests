@@ -66,7 +66,7 @@
     App.markers.marker1 = L.marker([51.5, -0.09]).bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
     App.markers.marker2 = L.marker([51.4, -0.19]).bindPopup("<b>Hello world2!</b><br>I am a popup2.").openPopup();
     App.markers.marker3 = L.marker([51.3, -0.29]).bindPopup("<b>Hello world3!</b><br>I am a popup2.").openPopup();
-    App.geoJSONFeatures = {"type":"FeatureCollection","myprop":"hello","myProp2":[{"name":"Jimmy","age":25},{"name":"Freddy","age":26}],"features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[0.3,51]},"properties":{"prop0":"value0"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[0.35,51.2]},"properties":{"prop0":"value0"}},{"type":"Feature","geometry":{"type":"LineString","coordinates":[[0.3,51.1],[0.3,51.2],[0.2,51.4],[0.1,51.3]]},"properties":{"prop0":"value0","prop1":0,"prop2":[{"subprop1":"val2","sb2":"val2b"},{"subprop2":"val2","sb2":"val2b"}]}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[0.3,51],[0.4,51],[0.4,51.1],[0.4,51.1],[0.3,51]]]},"properties":{"prop0":"value0","prop1":{"this":"that","p2":"val2"}},"myProp":"x"}]};
+    App.geoJSONFeatures = {"type":"FeatureCollection","myprop":"hello","myProp2":[{"name":"Jimmy","age":25},{"name":"Freddy","age":26}],"features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[0.3,51]},"properties":{"prop0":"value0"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[0.35,51.2]},"properties":{"prop0":"value0"}},{"type":"Feature","geometry":{"type":"LineString","coordinates":[[0.3,51.1],[0.3,51.2],[0.2,51.4],[0.1,51.3]]},"properties":{"prop0":"value0","prop1":0,"prop2":[{"subprop1":"val2","sb2":"val2b"},{"subprop2":"val2","sb2":"val2b"}]}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[0.3,51],[0.4,51],[0.4,51.1],[0.4,51.1],[0.3,51]]]},"properties":{"prop0":"value0","prop1":{"this":"that","p2":"val2"}},"myProp":"x", "style": {"color":"green"}} ]};
 
 App.markers.myMarkers =  L.layerGroup([App.markers.marker1, App.markers.marker2]);  // grouping markers
 
@@ -79,7 +79,7 @@ App.overlayMaps = {
     GeoFeatures: App.geoLayer
 };
 
-L.control.layers(App.baseMaps, App.overlayMaps).addTo(App.myMap);
+LayersControl = L.control.layers(App.baseMaps, App.overlayMaps).addTo(App.myMap);
 
 // L.geoJSON(geoJSONFeatures).addTo(mymap);
 
@@ -99,6 +99,26 @@ L.Control.myControl = L.Control.extend({
         var myControl_div = L.DomUtil.create('div', 'custom-control');
         myControl_div.onclick = function(){
           console.log('buttonClicked');
+          LayersControl.remove()
+       
+          App.geoLayer.remove();
+          // pass geojson ------------------- reconstruct geo layer overlay maps, control and put back on map
+          App.geoLayer = L.geoJson(
+             App.geoJSONFeatures, {    
+                style: App.stylex
+             }
+           );
+          App.geoLayer.addTo(App.myMap);
+          App.overlayMaps = {
+           Markers: App.markers.myMarkers,
+           Layer2: App.markers.marker3,
+          GeoFeatures: App.geoLayer
+        };
+
+           LayersControl = L.control.layers(App.baseMaps, App.overlayMaps).addTo(App.myMap);
+           //App.geoLayer.addto(App.myMap);
+
+
     }
         return myControl_div;
     },
@@ -111,30 +131,32 @@ L.control.myControl = function(opts) {
 }
 L.control.myControl({ position: 'bottomright' }).addTo(App.myMap);
 
-L.Control.myControl2 = L.Control.extend({
-    onAdd: function(map) {
-        var myControl_div2 = L.DomUtil.create('div', 'custom-control2');
-        myControl_div2.onclick = function(){
-          console.log('buttonClicked');
-    }
-        return myControl_div2;
-    },
-    onRemove: function(map) {
-        // Nothing to do here
-    }
-});
-L.control.myControl2 = function(opts) {
-    return new L.Control.myControl2(opts);
-}
-L.control.myControl2({ position: 'bottomright' }).addTo(App.myMap);
+ App.stylex = function (featurex) {  // somehowfeaurex is being passed - how ?
+    console.log ("feat: " + featurex.geometry.type);
+   //  example of feature dependent styling
+   if (featurex.geometry.type == "Polygon") {
+     return {
+       weight: 2,
+       opacity: 1,
+       color: 'red',
+       dashArray: '3',
+       fillOpacity: 1,
+       fillColor: 'red'
+     };
+   } else {
+     return {
+       weight: 2,
+       opacity: 1,
+       color: 'green',
+       dashArray: '3',
+       fillOpacity: 1,
+       fillColor: 'green'
+     };
+   }
+ }
 
 // ------------------------------------------------------------------------
 
     </script>
-
-
-
-
 </body>
-
 </html>
