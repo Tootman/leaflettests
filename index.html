@@ -10,6 +10,29 @@
 #mapid {
     height: 800px;
 }
+
+.custom-control, .custom-control2 {
+   width:200px;
+   height:40px;
+   font-size:2em;
+   margin:auto;
+   text-align:center;
+   background-color: brown;
+   color:white;
+}
+
+.custom-control::before,
+.custom-control2::before
+ {
+    content:'Click me!';
+}
+
+.custom-control:hover,
+.custom-control2:hover
+{
+    background-color:red;
+}
+
 </style>
 
 <body>
@@ -68,7 +91,44 @@ App.myMap.on('click', function onMapClick(e) {
         App.popup.openOn(App.myMap);
 			}
  	);
-// --------------------------------------
+
+// custom controls --------------------------------------------------------
+
+L.Control.myControl = L.Control.extend({
+    onAdd: function(map) {
+        var myControl_div = L.DomUtil.create('div', 'custom-control');
+        myControl_div.onclick = function(){
+          console.log('buttonClicked');
+    }
+        return myControl_div;
+    },
+    onRemove: function(map) {
+        // Nothing to do here
+    }
+});
+L.control.myControl = function(opts) {
+    return new L.Control.myControl(opts);
+}
+L.control.myControl({ position: 'bottomright' }).addTo(App.myMap);
+
+L.Control.myControl2 = L.Control.extend({
+    onAdd: function(map) {
+        var myControl_div2 = L.DomUtil.create('div', 'custom-control2');
+        myControl_div2.onclick = function(){
+          console.log('buttonClicked');
+    }
+        return myControl_div2;
+    },
+    onRemove: function(map) {
+        // Nothing to do here
+    }
+});
+L.control.myControl2 = function(opts) {
+    return new L.Control.myControl2(opts);
+}
+L.control.myControl2({ position: 'bottomright' }).addTo(App.myMap);
+
+// ------------------------------------------------------------------------
 
     </script>
 
