@@ -5,9 +5,57 @@
 	<title>Document</title>
 </head>
 <body>
-	Pic1: <img src="http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg" width = "500Px" />
-	<br>
-	Pic2: <img src="http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_114827.jpg" width = "500Px" />
-	
+	<h3> using src </h3>
+	<p id = "src"> </p>
+	Pic1: 
+	<hr>
+
+	<h3> Using XHR </h3>
+	<p id = "XHR"> </p>
+
+	<h3> Using ES6 Fetch </h3>
+	<div id="fetch"/> </div>
+
+	<script>
+	"use strict";
+	var downloadImage = document.createElement("IMG");
+		document.getElementById ('src').innerHTML =   '<img src="http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg" width = "500Px" />)';
+
+		var http = new XMLHttpRequest ();
+
+		/*
+		not working yet
+		http.open("GET", "http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg", true);
+		http.send();
+
+		 http.onreadystatechange = ()=>{
+		 	if (http.readyState == 4) {
+		 		//console.log("resp: " + http.response);
+		 		downloadImage.src = http.response;
+		 		document.getElementById ('xhr').innerHTML = downloadImage;
+		 	}
+		//
+	};
+	*/
+window.onload = (e)=>{
+	console.log("loaded!");
+	fetch('http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg')
+	 .then(res => res.blob()) // Gets the response and returns it as a blob
+  .then(blob => {
+    // Here's where you get access to the blob
+    // And you can use it for whatever you want
+    // Like calling ref().put(blob)
+
+    // Here, I use it to make an image appear on the page
+    console.log("blob!");
+    let objectURL = URL.createObjectURL(blob);
+    let myImage = new Image(500);
+    myImage.src = objectURL;
+    myImage.css="width:500px";
+    document.getElementById('fetch').appendChild(myImage)
+    });
+}
+
+	</script>
 </body>
 </html>
