@@ -19,9 +19,9 @@
 	<script>
 	"use strict";
 	var downloadImage = document.createElement("IMG");
-		document.getElementById ('src').innerHTML =   '<img src="http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg" width = "500Px" />)';
+		document.getElementById ('src').innerHTML =   '<img src="https://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg" width = "500Px" />)';
 
-		var http = new XMLHttpRequest ();
+		var https = new XMLHttpRequest ();
 
 		/*
 		not working yet
@@ -39,7 +39,7 @@
 	*/
 window.onload = (e)=>{
 	console.log("loaded!");
-	fetch('http://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg')
+	fetch('https://geo.danieljsimmons.uk/dan1/PHOTO_20180220_122300.jpg')
 	 .then(res => res.blob()) // Gets the response and returns it as a blob
   .then(blob => {
     // Here's where you get access to the blob
